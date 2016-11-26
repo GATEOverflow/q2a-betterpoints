@@ -26,7 +26,7 @@ function qa_db_points_calculations(){
 	if(qa_opt('edit_history_active')){
 		$orig['edits'] = array(
 				'multiple' => $options['points_multiple']*qa_opt('qa_bp_editpoints'),
-				'formula' => "count(distinct postid) as cnt from ^edit_history group by userid having ^edit_history.userid~",
+				'formula' => "count(distinct postid) as cnt from ^edit_history where ^edit_history.userid~",
 				);
 	}
 	if(qa_opt('cache_exams_count') > 0){
@@ -42,7 +42,7 @@ function qa_db_points_calculations(){
 	if(qa_opt('cache_blog_pcount') > 0){
 		$orig['blogs'] = array(
 				'multiple' => $options['points_multiple']*qa_opt('qa_bp_blogpoints'),
-				'formula' => "count * as cnt from ^blogs group by userid having ^blogs.userid~",
+				'formula' => "count * as cnt from ^blogs where ^blogs.userid~",
 				);
 	}
 
