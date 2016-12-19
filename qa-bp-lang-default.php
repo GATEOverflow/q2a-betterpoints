@@ -22,4 +22,5 @@
 
 return array(
 	'edits' => 'No. of Edits: ',
+	'savemsg' => 'Point calculations saved, Please recalculate points from Admin/Points Page',
 );
