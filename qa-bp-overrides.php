@@ -8,23 +8,6 @@ function qa_db_points_calculations(){
 	$options=qa_get_options(qa_db_points_option_names());
 	$orig['cposts']['multiple'] =  $options['points_multiple']*qa_opt('qa_bp_commentpoints');
 
-	$orig [	'cupvotes'] = array(
-			'multiple' => $options['points_multiple']*qa_opt('qa_bp_commentupvotepoints'),
-			'formula' => "COUNT(*) AS cupvotes FROM ^uservotes AS userid_src JOIN ^posts ON userid_src.postid=^posts.postid WHERE userid_src.userid~ AND LEFT(^posts.type, 1)='C' AND userid_src.vote>0",
-			);
-
-	$orig['cdownvotes'] = array(
-			'multiple' => $options['points_multiple']*qa_opt('qa_bp_commentdownvotepoints'),
-			'formula' => "COUNT(*) AS cdownvotes FROM ^uservotes AS userid_src JOIN ^posts ON userid_src.postid=^posts.postid WHERE userid_src.userid~ AND LEFT(^posts.type, 1)='C' AND userid_src.vote<0",
-			);
-	$orig['cvoteds'] = array(
-			'multiple' => $options['points_multiple'],
-			'formula' => "COALESCE(SUM(".
-			"LEAST(". qa_opt('qa_bp_commentuppoints')."*upvotes,". qa_opt('qa_bp_commentuplimitpoints').")".
-			"-".
-			"LEAST(".qa_opt('qa_bp_commentdownpoints')."*downvotes,".qa_opt('qa_bp_commentdownlimitpoints').")".
-			"), 0) AS cvoteds FROM ^posts AS userid_src WHERE LEFT(type, 1)='C' AND userid~",
-			);
 
 	if(qa_opt('edit_history_active')){
 		$orig['edits'] = array(
@@ -65,7 +48,7 @@ function qa_db_points_calculations(){
 	return false;
 
 }*/
-function qa_db_points_update_ifuser($userid, $columns)
+function qa_db_points_update_ifuser_off($userid, $columns)
 {
 	if(!qa_opt('qa_bp_enable'))
 		return qa_db_points_update_ifuser_base($userid, $columns);

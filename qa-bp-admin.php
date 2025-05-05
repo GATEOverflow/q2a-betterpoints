@@ -8,18 +8,6 @@ class qa_bp_admin {
 				return 0;
 			case 'qa_bp_commentpoints': 
 				return 1;
-			case 'qa_bp_commentuppoints': 
-				return 2;
-			case 'qa_bp_commentdownpoints': 
-				return 1;
-			case 'qa_bp_commentuplimitpoints': 
-				return 10;
-			case 'qa_bp_commentdownlimitpoints': 
-				return 5;
-			case 'qa_bp_commentupvotepoints': 
-				return 1;
-			case 'qa_bp_commentdownvotepoints': 
-				return 0;
 			case 'qa_bp_editpoints': 
 				return 2;
 			case 'qa_bp_exampoints': 
@@ -51,7 +39,7 @@ class qa_bp_admin {
 
 			$sqlCols = 'SHOW COLUMNS FROM '.$tablename;
 			$fields = qa_db_read_all_values(qa_db_query_sub($sqlCols));
-			$newcolumns = array('cupvotes', 'cdownvotes', 'cvoteds');
+			$newcolumns = array();
 			if(qa_opt('edit_history_active')){
 				$newcolumns [] = 'edits';
 			}
@@ -84,12 +72,6 @@ class qa_bp_admin {
 		if (qa_clicked('qa_bp_save')) {
 			qa_opt('qa_bp_enable',(bool)qa_post_text('qa_bp_enable'));
 			qa_opt('qa_bp_commentpoints',qa_post_text('qa_bp_commentpoints'));
-			qa_opt('qa_bp_commentuppoints',qa_post_text('qa_bp_commentuppoints'));
-			qa_opt('qa_bp_commentdownpoints',qa_post_text('qa_bp_commentdownpoints'));
-			qa_opt('qa_bp_commentupvotepoints',qa_post_text('qa_bp_commentupvotepoints'));
-			qa_opt('qa_bp_commentdownvotepoints',qa_post_text('qa_bp_commentdownvotepoints'));
-			qa_opt('qa_bp_commentuplimitpoints',qa_post_text('qa_bp_commentuplimitpoints'));
-			qa_opt('qa_bp_commentdownlimitpoints',qa_post_text('qa_bp_commentdownlimitpoints'));
 			if(qa_opt('edit_history_active')){
 				qa_opt('qa_bp_editpoints',qa_post_text('qa_bp_editpoints'));
 			}	
@@ -117,42 +99,6 @@ class qa_bp_admin {
 					'value' => qa_opt('qa_bp_commentpoints'),
 					'type' => 'number',
 					);
-				$fields[] = array(
-					'label' => 'Points for Receiving a Comment Upvote',
-					'tags' => 'name="qa_bp_commentuppoints"',
-					'value' => qa_opt('qa_bp_commentuppoints'),
-					'type' => 'number',
-					);
-				$fields[] = array(
-					'label' => 'Limit in Points for a Comment Up Vote',
-					'tags' => 'name="qa_bp_commentuplimitpoints"',
-					'value' => qa_opt('qa_bp_commentuplimitpoints'),
-					'type' => 'number',
-					);
-				$fields[] = array(
-						'label' => 'Reduction in Points for Receiving a Comment DownVote',
-						'tags' => 'name="qa_bp_commentdownpoints"',
-						'value' => qa_opt('qa_bp_commentdownpoints'),
-						'type' => 'number',
-						);
-				$fields[] = array(
-						'label' => 'Limit in Points for a Comment Down Vote',
-						'tags' => 'name="qa_bp_commentdownlimitpoints"',
-						'value' => qa_opt('qa_bp_commentdownlimitpoints'),
-						'type' => 'number',
-						);
-				$fields[] = array(
-						'label' => 'Points for Giving a Comment Upvote',
-						'tags' => 'name="qa_bp_commentupvotepoints"',
-						'value' => qa_opt('qa_bp_commentupvotepoints'),
-						'type' => 'number',
-						);
-				$fields[] = array(
-						'label' => 'Points for Giving a Comment DownVote',
-						'tags' => 'name="qa_bp_commentdownvotepoints"',
-						'value' => qa_opt('qa_bp_commentdownvotepoints'),
-						'type' => 'number',
-						);
 				if(qa_opt('edit_history_active')){
 					$fields[] = array(
 							'label' => 'Points for an Edit',
