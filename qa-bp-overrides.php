@@ -47,7 +47,7 @@ function qa_db_points_calculations(){
 	return false;
 
 }*/
-function qa_db_points_update_ifuser($userid, $columns)
+function qa_db_points_update_ifuser_off($userid, $columns)
 {
 	if(!qa_opt('qa_bp_enable'))
 		return qa_db_points_update_ifuser_base($userid, $columns);

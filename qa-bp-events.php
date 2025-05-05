@@ -9,6 +9,10 @@ class qa_bp_events {
 		{
 			qa_db_points_update_ifuser($userid, 'edits');
 		}
+		else if($event === 'c_post')
+		{
+			qa_db_points_update_ifuser($userid, 'cposts');
+		}
 
 		else if($event === 'qas_blog_b_post')
 		{

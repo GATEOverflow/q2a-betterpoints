@@ -6,6 +6,8 @@ class qa_bp_admin {
 		switch($option) {
 			case 'qa_bp_enable': 
 				return 0;
+			case 'qa_bp_commentpoints': 
+				return 1;
 			case 'qa_bp_editpoints': 
 				return 2;
 			case 'qa_bp_exampoints': 
@@ -37,7 +39,7 @@ class qa_bp_admin {
 
 			$sqlCols = 'SHOW COLUMNS FROM '.$tablename;
 			$fields = qa_db_read_all_values(qa_db_query_sub($sqlCols));
-			$newcolumns = array('cupvotes', 'cdownvotes', 'cvoteds');
+			$newcolumns = array();
 			if(qa_opt('edit_history_active')){
 				$newcolumns [] = 'edits';
 			}
@@ -69,6 +71,7 @@ class qa_bp_admin {
 
 		if (qa_clicked('qa_bp_save')) {
 			qa_opt('qa_bp_enable',(bool)qa_post_text('qa_bp_enable'));
+			qa_opt('qa_bp_commentpoints',qa_post_text('qa_bp_commentpoints'));
 			if(qa_opt('edit_history_active')){
 				qa_opt('qa_bp_editpoints',qa_post_text('qa_bp_editpoints'));
 			}	
@@ -89,6 +92,12 @@ class qa_bp_admin {
 				'tags' => 'name="qa_bp_enable"',
 				'value' => (bool)qa_opt('qa_bp_enable'),
 				'type' => 'checkbox',
+					);
+				$fields[] = array(
+					'label' => 'Points for a Comment Post',
+					'tags' => 'name="qa_bp_commentpoints"',
+					'value' => qa_opt('qa_bp_commentpoints'),
+					'type' => 'number',
 					);
 				if(qa_opt('edit_history_active')){
 					$fields[] = array(
